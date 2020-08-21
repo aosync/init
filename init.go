@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"os"
 	"os/exec"
 	"os/signal"
@@ -80,9 +81,24 @@ func StartLoop(absolute string) {
 	}
 }
 
+func preserveEntropy() {
+	entropy := make([]byte, 1024)
+	rand.Read(entropy)
+	ioutil.WriteFile(EntropyReserve, entropy, 0644)
+}
+
+func injectEntropy() {
+	entropy, err := ioutil.Read(EntropyReserve)
+	if err != nil {
+		return
+	}
+	ioutil.WriteFile(EntropyKernel, entropy, 0644)
+}
+
 func Zero() {
 	fmt.Println("-- Phase 0: preliminary system setup.")
 	RunEachIn(ZeroDir)
+	injectEntropy()
 	hostname()
 }
 
@@ -94,6 +110,7 @@ func One() {
 
 func Two() {
 	fmt.Println("-- Phase 2: reboot triggered, shutdown hooks.")
+	preserveEntropy()
 	RunEachIn(TwoDir)
 }
 
