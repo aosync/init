@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Wait for a device manager to not block interface renaming
+until pidof udevd || pidof mdev; do
+	sleep 0.3
+done
+
+exec iwd -d > /dev/null 2>&1

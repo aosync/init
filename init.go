@@ -46,7 +46,6 @@ func hostname() {
 		host = []byte("linux")
 	}
 	ioutil.WriteFile(HostnameKernel, host, 0644)
-	fmt.Println("Hostname set.")
 }
 
 func RunEachIn(directory string) {
