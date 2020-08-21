@@ -1,1 +1,1 @@
-tlp init start
+tlp init start >/dev/null 2>&1
