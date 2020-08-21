@@ -1,0 +1,5 @@
+swapoff -a
+umount -a -l
+umount -a
+
+mount -o remount,ro /
