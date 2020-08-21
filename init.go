@@ -101,15 +101,6 @@ func injectEntropy() {
 	ioutil.WriteFile(EntropyKernel, entropy, 0644)
 }
 
-func Reap() {
-	for {
-		sigc := make(chan os.Signal, 2)
-		signal.Notify(sigc, syscall.SIGCHLD)
-		<-sigc
-		syscall.Wait4(-1, nil, 0, nil)
-	}
-}
-
 func Zero() {
 	fmt.Println("-- Phase 0: preliminary system setup.")
 	mountSystem()
@@ -147,8 +138,9 @@ func main() {
 			syscall.Reboot(syscall.LINUX_REBOOT_CMD_RESTART)
 		}
 	}()
-	go Reap()
 	Zero()
 	One()
-	select {}
+	for {
+		syscall.Wait4(0, nil, 0, nil)
+	}
 }
