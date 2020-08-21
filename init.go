@@ -127,7 +127,6 @@ func main() {
 		fmt.Println("Not run as pid 1.")
 		os.Exit(1)
 	}
-	fmt.Println("Init started.")
 	sigc := make(chan os.Signal, 2)
 	signal.Notify(sigc, syscall.SIGUSR1, syscall.SIGUSR2)
 	go func() {
