@@ -141,6 +141,9 @@ func main() {
 	Zero()
 	One()
 	for {
-		syscall.Wait4(0, nil, 0, nil)
+		sigc := make(chan os.Signal, 2)
+		signal.Notify(sigc, syscall.SIGCHLD)
+		<-sigc
+		syscall.Wait4(-1, nil, syscall.WNOHANG, nil)
 	}
 }
