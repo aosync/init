@@ -33,6 +33,13 @@ func system(prog string, args ...string) {
 	cmd.Run()
 }
 
+func mountSystem() {
+	syscall.Mount("proc", "/proc", "proc", 0x4|0x2|0x8, "")
+	syscall.Mount("sys", "/sys", "sysfs", 0x4|0x2|0x8, "")
+	syscall.Mount("run", "/run", "tmpfs", 0x4|0x2, "mode=0755")
+	syscall.Mount("dev", "/dev", "devtmpfs", 0x2, "mode=0755")
+}
+
 func hostname() {
 	host, err := ioutil.ReadFile(HostnameUser)
 	if err != nil {
@@ -88,7 +95,7 @@ func preserveEntropy() {
 }
 
 func injectEntropy() {
-	entropy, err := ioutil.Read(EntropyReserve)
+	entropy, err := ioutil.ReadFile(EntropyReserve)
 	if err != nil {
 		return
 	}
@@ -97,9 +104,10 @@ func injectEntropy() {
 
 func Zero() {
 	fmt.Println("-- Phase 0: preliminary system setup.")
-	RunEachIn(ZeroDir)
+	mountSystem()
 	injectEntropy()
 	hostname()
+	RunEachIn(ZeroDir)
 }
 
 func One() {
