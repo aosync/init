@@ -119,6 +119,7 @@ func Two() {
 	fmt.Println("-- Phase 2: reboot triggered, shutdown hooks.")
 	preserveEntropy()
 	RunEachIn(TwoDir)
+	syscall.Sync()
 }
 
 func main() {
