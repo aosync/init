@@ -1,3 +1,5 @@
+#!/bin/sh
+
 for file in /etc/rc.d/*.shutdown; do
 	[ -f "$file" ] && . "$file"
 done

@@ -1,3 +1,5 @@
+#!/bin/sh
+
 if command -v udevd >/dev/null; then
 	udevd -d
 	udevadm trigger -c add -t subsystems

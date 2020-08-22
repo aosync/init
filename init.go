@@ -16,8 +16,6 @@ const HostnameKernel = "/proc/sys/kernel/hostname"
 const EntropyReserve = "/var/entropy"
 const EntropyKernel = "/dev/random"
 
-const Shell = "/bin/sh"
-
 const InitDir = "/etc/init"
 const ZeroDir = InitDir + "/0"
 const OneDir = InitDir + "/1"
@@ -54,7 +52,7 @@ func RunEachIn(directory string) {
 			return nil
 		}
 		absolute, _ := filepath.Abs(current)
-		system(Shell, absolute)
+		system(absolute)
 		return nil
 	})
 }
@@ -65,7 +63,7 @@ func StartEachIn(directory string) {
 			return nil
 		}
 		absolute, _ := filepath.Abs(current)
-		go system(Shell, absolute)
+		go system(absolute)
 		return nil
 	})
 }
@@ -83,7 +81,7 @@ func StartLoopEachIn(directory string) {
 
 func StartLoop(absolute string) {
 	for {
-		system(Shell, absolute)
+		system(absolute)
 	}
 }
 

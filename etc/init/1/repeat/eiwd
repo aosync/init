@@ -4,5 +4,6 @@
 until pidof udevd || pidof mdev; do
 	sleep 0.3
 done
+sleep 0.2
 
 exec iwd -d > /dev/null 2>&1

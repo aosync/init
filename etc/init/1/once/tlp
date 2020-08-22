@@ -1,1 +1,3 @@
+#!/bin/sh
+
 tlp init start >/dev/null 2>&1
