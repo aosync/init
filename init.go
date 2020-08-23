@@ -1,9 +1,9 @@
 package main
 
 import (
+	"crypto/rand"
 	"fmt"
 	"io/ioutil"
-	"math/rand"
 	"os"
 	"os/exec"
 	"os/signal"
