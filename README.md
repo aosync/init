@@ -1,2 +1,2 @@
 # init
-A fast init system designed for *UNIX operating systems.
+A fast init system designed for linux based operating systems.
